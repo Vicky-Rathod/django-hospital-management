@@ -1,0 +1,196 @@
+{% extends 'layout.html' %} {% load widget_tweaks %} {% block title %} Admit Patient {% endblock %} {% block body %}
+<section>
+	<div class="card-panel">	<span class="blue-text text-darken-2">Name : {{object.firstname}} {{object.lastname}}</span> 
+		<br>	<span class="blue-text text-darken-2">Phone : {{ object.phone  }}</span>
+		<br>	<span class="blue-text text-darken-2">Address : {{ object.address  }}</span>
+		<br>	<span class="blue-text text-darken-2">Gender : {{ object.gender  }}</span>
+		<br>
+	</div>
+	<!-- BEGIN  - FORM -->
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-header">
+				<header>Admit Patient</header>
+			</div>
+			<!--  CARD BODY   -->
+			<div class="card-body">
+				<!--  CARD PANNEL   -->
+				<div class="card-panel">
+					<form class="col s12" role="form" method="post" enctype="multipart/form-data">{% csrf_token %}
+						<input id="patient_id" name="patient" type="hidden" value="{{object.patient_id}}">
+						<div class="row">
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label>Initial Condition &nbsp<span style="color: red"></span>
+									</label>{{ form2.condition_admission | add_class:'form-control'}}</div>
+							</div>
+							<div class="col-lg-4">
+
+									<label>Date of Admission <span style="color: red">*</span>
+									</label>
+
+
+
+
+
+   {{form2.date_of_admission | add_class:'datepicker  form-control	' }}
+    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+
+      </div>
+
+
+
+
+
+
+
+
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label>Select Time <span style="color: red">*</span>
+									</label>
+									<div class="input-group clockpicker" data-autoclose="true">
+										{{form2.time_of_admission| add_class:'clockpicker form-control' }}	<span
+											class="input-group-addon">
+													</span>
+									</div>
+									<label id="startTimehelp" class="error" for=""></label>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label>Weight &nbsp<span style="color: red"></span>
+									</label>{{ form2.weight| add_class:'form-control' }}
+									<label id="refDoctorNamehelp" class="error" for=""></label>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label>Select Ward &nbsp<span style="color: red"></span>
+									</label>{{ form2.rooms | add_class:'form-control' }}</select>
+								</div>
+							</div>
+						</div>
+						<div class="bg-success p-xs b-r-sm text-uppercase  font-bold" style="color: black">CONSULTANT DETAILS</div>
+						</br>
+						<div class="row">
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label>Primary Consultant &nbsp<span style="color: red"></span>
+									</label>{{ form2.consultant | add_class:'form-control' }}
+									<label id="underDoctorhelp" class="error" for=""></label>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label>Secondary Consultant &nbsp<span style="color: red"></span>
+									</label>{{ form2.secondary_consultant | add_class:'form-control' }}
+									<label id="localexamhelp" class="error" for=""></label>
+								</div>
+							</div>
+						</div>
+						<div class="bg-success p-xs b-r-sm text-uppercase  font-bold" style="color: black">RELATIVE / PARENTS DETAILS</div>
+						</br>
+						<div class="row">
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label>Person Responsible for bill &nbsp<span style="color: red"></span>
+									</label>{{ form2.bill_responsible| add_class:'form-control' }}</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label>Relation With Patient &nbsp<span style="color: red"></span>
+									</label>{{ form2.bill_relation| add_class:'form-control' }}</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label>Address of Person &nbsp<span style="color: red"></span>
+									</label>
+									<input id="addOfPerson" value="{{ object.address }}" type="text" class="form-control" vplaceholder="Address of Person">
+									<label id="addOfPersonhelp" class="error" for=""></label>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 hide">
+								<div class="form-group">
+									<label>Contact Number &nbsp<span style="color: red"></span>
+									</label>
+									<input id="contactNumber" type="text" value=" {{ object.phone  }}" class="form-control" maxlength="10" placeholder="Enter Contact Number">
+									<label id="contactNumberhelp" class="error" for=""></label>
+								</div>
+							</div>
+							<div class="col-lg-3 hide">
+								<div class="form-group">
+									<label>Alternate Number &nbsp<span style="color: red"></span>
+									</label>
+									<input id="alternateNumber" value=" {{ object.phone  }}" type="text" class="form-control" maxlength="10" placeholder="Enter Alternate Number ">
+									<label id="alternateNumberhelp" class="error" for=""></label>
+								</div>
+							</div>
+						</div>
+						</br>
+						<div class="row">
+							<div class="col-lg-10">
+								<div class="form-group">
+									<label>Provisional Diagnosis &nbsp<span style="color: red">*</span>
+									</label>
+									{{ form2.provisional_diagnosis | add_class:'form-control '| attr:'rows:3'}}
+									<label id="provisionalhelp" class="error" for=""></label>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-10">
+								<div class="form-group">
+									<label>Reason For Admission &nbsp<span style="color: red">*</span>
+									</label>
+									{{ form2.reason_admission | add_class:'form-control '| attr:'rows:3'}}
+									<label id="historyhelp" class="error" for=""></label>
+								</div>
+							</div>
+						</div>{% block javascript %}
+
+
+						<script>
+
+$('.clockpicker').clockpicker({
+ autoclose: true,
+    'default': 'now'
+});
+
+    $('.datepicker').pickadate({
+		 format:'yyyy-mm-dd',
+        formatSubmit: 'yyyy-mm-dd',
+         hiddenPrefix: 'prefix__',
+ 		 hiddenSuffix: '__suffix',
+
+
+      });
+
+</script>
+
+						{% endblock javascript %}
+						<div class="col-md-12">
+							<hr>
+							<div class="card-actionbar-row">
+								<input type="submit" class="btn btn-flat btn-primary ink-reaction" value="SUBMIT">
+							</div>{% for i in form2.errors %} {{i}} {% endfor %} {% if form2.errors %} error! {% endif %}</div>
+				</div>
+			</div>
+			</form>
+		</div>
+		<!--end .card-body -->
+	</div>
+	<!--end .card -->
+	</div>
+	<!--end .col -->
+	<!-- END FORM - TIME ON SITE -->
+	</div>
+	</div>
+	<!--end .row -->
+	<!--end .section-body -->
+</section>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'layout.html' %} {% block title %} All IPD {% endblock %} {% block body %}
+<section>
+	<div class="section-body">
+		<!-- BEGIN DATATABLE 2 -->
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-header">
+						<header>All Admitted Patients</header>
+					</div>
+					<div class="card-body">
+						<div id =  class="table-responsive">
+							<table id="example" class="table table-striped table-bordered" style="width:100%">
+								<thead>
+									<tr>
+										<th>UHID</th>
+										<th>IPD No</th>
+										<th>Name</th>
+										<th>Phone</th>
+										<th>Room</th>
+										<th>consultant</th>
+										<th>Gender</th>
+										<th>Buttons</th>
+									</tr>
+								</thead>
+								<tbody>{% for order in ipd %}
+									<tr class="gradeX">
+										<td>{{ order.patient.patient_id}}</td>
+										<td>{{ order.ipd_id }}</td>
+											<td>{{ order.patient.firstname}} {{ order.patient.lastname  }}</td>
+											<td>{{ order.patient.phone }}</td>
+											<td>{{ order.rooms}}</td>
+											<td>{{ order.consultant }}</td>
+											<td>{{ order.patient.gender }}</td>
+											<td> <a href="{% url 'discharge_details' order.ipd_id %}"><i class="fa fa fa-bars fa-2x" ></i> </a>
+											</td>
+									</tr>{% endfor %}</tbody>
+							</table>
+						</div>
+						<!--end .table-responsive -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--end .col -->
+		</div>
+		<!--end .row -->
+		<!-- END DATATABLE 2 -->
+	</div>
+	<!--end .section-body -->
+
+</section>
+<script>
+ 
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+                </script>
+
+
+{% endblock %}    

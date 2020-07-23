@@ -1,0 +1,359 @@
+<div id="div1" ; class="invoice-boxs" ; >
+        <div class="invoice-box">
+                <table cellpadding="0" cellspacing="0" >
+                    <tr>
+                        <td colspan="2">
+                            <table style=" font-size:16px;">
+                             <tr>
+                                <th></th>
+                                <th colspan="2" ><h1 style="text-align:center;font-size:20px; padding-bottom: 10px; margin:0;">
+                                <span id="dischargeTypeDetailsId" style="text-decoration: underline";>
+                                </span></h1><h2 style="text-align:center;font-size:14px;padding:0; margin:0;"><span id="dischargeTypeId" style="text-decoration: underline";></span></h2></th>
+                                <th></th>
+                                </tr>
+                           </table>
+                            <table style=" font-size:14px;padding:0; margin:0;" >
+                              <tr>
+                                 <th class="patient-name">UHID No :{{object.patient.patient_id}} <span id="regNoId"></span> </th>
+                                 <th class="patient-name">Regd No :{{object.ipd_id}}  <span id="ipdNoId"></span> </th>
+                                 <th class="patient-name">Contact No : {{object.patient.phone}}<span id="contactNoId"></span> </th>
+                              </tr>
+                              <tr>
+                                <th class="patient-name">Name Of Patient :{{object.patient.firstname}} {{object.patient.lastname}}<span id="patientNameId"></span> </th>
+                                 <th class="patient-name">Age :  <span id="ageId"></span> </th>
+                                <th class="patient-name">Gender :{{object.patient.gender}} <span id="genderId"></span> </th>
+                              </tr>
+                              </table>
+                             <table style=" font-size:14px;padding:0; margin:0;">
+                             <tr >
+                                  <th  width='70%' class="patient-name">Address :{{object.patient.address}} <span id="addressId"></span> </th>
+                                  <th   width='25%'class="patient-name">Weight :{{object.weight}} <span id="weightId"></span> </th>
+                             </tr>
+                            </table>
+                         <table style=" font-size:14px;padding:0; margin:0;">
+                             <tr >
+                                  <th width='50%' class="patient-name"> <div class="box-date">DOA :{{object.date_of_admission}} <span id="doaId"></span> </div></th>
+                                  <th width='50%' class="patient-name"> <div class="box-date">DOD :{{discharge.date_of_discharge}} <span id="dodId"></span> </div></th>
+                             </tr>
+                         </table>
+                         <!-- <table style=" font-size:14px;padding:0; margin:0;">
+                             <tr >
+                                  <th class="patient-name">Consultant Incharge : <span id="consultantId"></span> </th>
+                                  
+                             </tr>
+                         </table> -->
+                        </td>
+                    </tr>
+                    <tr>
+                         <td colspan="2">
+                            <hr>
+                        </td>
+                    </tr>
+                     <tr class="information">
+                        <th colspan="2">
+                            Primary Consultant :- {{object.consultant}}<span id="consultantId"></span>
+                        </th>
+                    </tr> 
+                     <tr class="details">
+                        <td>
+                         
+                        </td>
+                    </tr> 
+                    <br>
+                </table>
+                 <br>
+                <table cellpadding="0" cellspacing="0" >
+                    <tr class="information">
+                        <th colspan="2">
+                            Secondary Consultant :- {{object.secondary_consultant}}<span id="secconsultantId"></span>
+                        </th>
+                    </tr> 
+                </table>
+                 <br>
+                <table cellpadding="0" cellspacing="0" >
+                    <tr >
+                        <th >
+                            Diagonsis :-{{discharge.final_diagnosis}} <span id="diagnosisId"></span>
+                        </th>
+                    </tr>
+                    <tr class="details">
+                       <td colspan="2">
+                            
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <table cellpadding="0" cellspacing="0">
+                    <tr >
+                        <th>
+                           Condition on Admission :-{{object.reason_admission}}<span id="conditionOnadmissionId"></span>
+                        </th>
+                    </tr>
+                    <tr class="details">
+                       <td colspan="2">
+                            
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <table cellpadding="0" cellspacing="0">
+                    <tr >
+                        <th>
+                          Condition On Discharge :- {{discharge.discharge_condition}}<span id="conditionOnDischargeId"></span> 
+                        </th>
+                    </tr>
+                    <tr class="details">
+                       <td colspan="2">
+                           
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <table cellpadding="0" cellspacing="0" > 
+                     <tr>
+                        <th>
+                           Treatment Given
+                        </th>
+                    </tr>
+                    <tr class="details">
+                       <td > 
+                         <table id="treatmentGivenTableId"  border="1" style="text-align:center" class="test-class">
+                           <thead>
+                              <tr>
+                                 
+                                 <th>Medicine Name</th>
+                                 <th>Dose</th>
+                                 <th>Route</th>
+                                 <th>No Of Days</th>
+                              </tr>
+                          </thead>
+                          <tbody>{% for ab in treatmentgivenlist %}
+                                <tr class="gradeX">
+                                    
+                                    <td>{{ ab.medicine_name}}</td>
+                                    <td align="center">{{ ab.types_of_doses }}</td>
+                                    <td>{{ ab.route }}</td>
+                                    <td>{{ ab.number_of_days}}</td>
+                                  
+                                </tr>{% endfor %}</tbody>
+                      </table>
+                        </td>
+                    </tr> 
+                </table> 
+                <br>
+                <table cellpadding="0" cellspacing="0">
+                    <tr >
+                        <th>
+                           Investigations
+                        </th>
+                    </tr>
+                    <tr class="details">
+                       <td colspan="2">
+                             <table id="investigationTableId"  border="1" style="text-align:center" class="test-class">
+                           <thead>
+                             <tr>
+                                 <th width='20%'>Report Name</th>
+                                 <th width='20%'>Date</th>
+                                 <th width='60%'>Findings</th>
+                              </tr>
+                          </thead>
+                          <tbody>{% for ab in investilist %}
+                                <tr class="gradeX">
+                                    <td>{{ab.name}}</td>
+                                    <td>{{ ab.date}}</td>
+                                    <td>{{ ab.report }}</td>
+                                    
+                                   
+                                </tr>{% endfor %}</tbody>	
+                      </table>
+                        </td>
+                    </tr>
+                </table>
+                <table cellpadding="0" cellspacing="0" >
+                    <tr >
+                        <th>
+                           Treatment Advised
+                        </th>
+                    </tr>
+                    <tr class="details">
+                       <td colspan="2">
+                         <table id="treatmentAdviceTableId"  border="1" style="text-align:center" class="test-class">
+                           <thead>
+                              <tr>
+                                 
+                                 <th style="text-align:center">Medicine Name</th>
+                                 <th>Dose</th>
+                                 <th>Days</th>
+                                 <th>Description</th>
+                              </tr>
+                          </thead>
+                          <tbody>{% for ab in treatmentadvicedlist %}
+                                <tr class="gradeX" >
+                                    
+                                    <td>{{ ab.medicine}}</td>
+                                    <td >{{ ab.types_ofdoses }}</td>
+                                    <td>{{ ab.number_ofdays }}</td>
+                                    <td>{{ ab.discription}}</td>
+                                  
+                                </tr>{% endfor %}</tbody>
+                      </table>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <table cellpadding="0" cellspacing="0">
+                    <tr >
+                        <th>
+                          Follow Up Advised :- {{discharge.follow_up_advice}} <span id="followUpAdvisedId"></span> 
+                        </th>
+                    </tr>
+                    <tr class="details">
+                       <td colspan="2">
+                          
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <br>
+                <table style="text-align:center" >
+                     <thead>
+                            <tr >
+                              <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                              <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                              <th ><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>Signature<br>Shree Hospital,Akola</th>
+                            </tr>
+                    </thead>
+                </table>
+            </div>
+           
+          </div>
+          <style>
+                .invoice-box {
+                    max-width: 800px;
+                    margin: auto;
+                    padding-top: 5px;
+                      padding-right: 30px;
+                      padding-bottom: 30px;
+                      padding-left: 30px;
+                    font-size: 16px;
+                    line-height: 18px;
+                    font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+                    color: #555;
+                }
+                .box-date{
+                      width: 200px;
+                      border: 1px solid black;
+                      padding-top: 5px;
+                      padding-right: 5px;
+                      padding-bottom: 5px;
+                      padding-left: 5px;
+                      height: 20px;
+                }
+                .invoice-boxs {
+                    max-width: 800px;
+                    margin: auto;
+                    padding: 0px;
+                    font-size: 16px;
+                    line-height: 0px;
+                    font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+                    color: #555;
+                }
+                .invoice-box table {
+                    width: 100%;
+                    line-height: inherit;
+                    text-align: left;
+                }
+                .invoice-boxs table {
+                    width: 100%;
+                    line-height: inherit;
+                    text-align: left;
+                }
+                .invoice-box table td {
+                    vertical-align: top;
+                }
+                .invoice-box table tr td:nth-child(2) {
+                    text-align: right;
+                }
+                .invoice-box table tr.top table td {
+                    padding-bottom: 20px;
+                }
+                .invoice-box table tr.top table td.title {
+                    font-size: 45px;
+                    line-height: 45px;
+                    color: #333;
+                }
+                .invoice-box table tr.information table td {
+                    padding-bottom: 40px;
+                }
+                .invoice-box table tr.heading td {
+                    background: #eee;
+                    border-bottom: 1px solid #ddd;
+                    font-weight: bold;
+                }
+                .invoice-box table tr.details td {
+                    padding-bottom: 4px;
+                }
+                .invoice-box table tr.item td{
+                    border-bottom: 10px solid #eee;
+                }
+            
+                .invoice-box table tr.item.last td {
+                    border-bottom: none;
+                }
+                .invoice-box table tr.total td:nth-child(2) {
+                    border-top: 0px solid #eee;
+                    font-weight: bold;
+                }
+                .invoice-boxs table tr.total td:nth-child(2) {
+                    border-top: 0px solid #eee;
+                    font-weight: bold;
+                }
+                .test-class{
+                        border-collapse: collapse;
+                }
+                @media only screen and (max-width: 1200px) {
+                    .invoice-box table tr.top table td {
+                        width: 100%;
+                        display: block;
+                        text-align: center;
+                    }
+                    .invoice-box table tr.information table td {
+                        width: 100%;
+                        display: block;
+                        text-align: center;
+                    }
+                }
+                /** RTL **/
+                .rtl {
+                    direction: rtl;
+                    font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+                }
+                .rtl table {
+                    text-align: right;
+                }
+                .rtl table tr td:nth-child(2) {
+                    text-align: left;
+                }
+               table {
+                    width: 100%;
+                    padding: 0;
+                    margin: 0;
+                    
+                  } 
+                  table#t01 {
+                    border: 1px solid black;
+                    border-collapse: collapse;
+                  }
+                  html, body{
+                   margin: 0;
+                  }
+                  @page {
+                    size: auto;   /* auto is the initial value */
+                    margin: 20px;  /* this affects the margin in the printer settings */
+                  }
+                   #div1 {
+                        width:100%;height:100px;white-space:nowrap;
+                        padding:4px;
+                  }
+                </style>
+            

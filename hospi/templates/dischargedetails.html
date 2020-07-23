@@ -1,0 +1,1355 @@
+{% extends 'layout.html' %} {% load widget_tweaks %} {% block title %} Admit Patient {% endblock %} {% block body %}
+<div class="container">
+		<div class="card-panel">	<span class="blue-text text-darken-2">Name : {{object.patient.firstname}} {{object.patient.lastname}}</span> 
+			<br>	<span class="blue-text text-darken-2">Phone : {{ object.patient.phone  }}</span>
+			<br>	<span class="blue-text text-darken-2">Address : {{ object.patient.address  }}</span>
+			<br>	<span class="blue-text text-darken-2">UHID : {{ object.patient.patient_id }}</span>
+			<br>
+		</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="tab" role="tabpanel">
+				<!-- Nav tabs -->
+				<div id="exTab2" class="container">
+					<ul class="nav nav-tabs">
+						<li role="presentation" >
+
+
+							<div class="icon"></div>
+							<a href="#admissionTab" data-toggle="tab">Admission</a>
+						</li>
+						<li role="presentation">
+
+
+							<div class="icon"></div>
+							<a href="#procedureTab" data-toggle="tab">Procedure and Extra Visits</a>
+						</li>
+						<li role="presentation">
+
+
+							<div class="icon"></div>
+							<a href="#investigationId" data-toggle="tab">Investigation</a>
+						</li>
+						<li role="presentation">
+
+
+							<div class="icon"></div>
+							<a href="#treatmentgivenTab" data-toggle="tab">Treatment Given</a>
+						</li>
+						<li role="presentation">
+
+
+							<div class="icon"></div>
+							<a href="#treatmentadvicedTab" data-toggle="tab">Treatment Adviced</a>
+						</li>
+						<li role="presentation">
+
+
+							<div class="icon"></div>
+							<a href="#dailyTab" data-toggle="tab">Daily Round</a>
+						</li>
+						<li role="presentation">
+
+
+							<div class="icon"></div>
+							<a href="#notesTab" data-toggle="tab">Notes</a>
+						</li>
+						<li role="presentation">
+
+
+							<div class="icon"></div>
+							<a href="#dischargeTab" data-toggle="tab">Discharge</a>
+						</li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content tabs">
+						<div role="tabpanel" class="tab-pane active" id="admissionTab">
+							<div class="col-lg-14">
+								<div class="card">
+									<div class="card-header">
+										<header class="font-weight-bold  font-italic">Admission Form</header>
+									</div>
+									<!--  CARD BODY   -->
+									<div class="card-body">
+										<div class="card-panel">
+											<form action="{% url 'create-patient-record'%}" method="post"
+												enctype="multipart/form-data">{% csrf_token %}
+												<div class="section-body">
+													<div class="row">
+														<div class="col-lg-6">
+															<h5 class="font-bold">
+																Patient Name :
+																<span> {{object.patient.firstname}}
+																	{{object.patient.lastname}}</span>
+															</h5>
+														</div>
+														<div class="col-lg-2">
+															<h5 class="font-bold">
+																Sex :
+																<span>{{object.patient.gender}}</span>
+															</h5>
+														</div>
+														<div class="col-lg-2">
+															<h5 class="font-bold">
+																Weight :
+																<span>{{object.weight}}</span>
+															</h5>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-6">
+															<h5 class="font-bold">
+																Address :
+																<span>{{object.patient.address}}</span>
+															</h5>
+														</div>
+														<div class="col-lg-2">
+															<h5>
+																IP No :
+																<span>{{object.ipd_id}}</span>
+															</h5>
+														</div>
+														<div class="col-lg-4">
+															<h5>
+																Contact Number :
+																<span>{{object.patient.phone}}</span>
+															</h5>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-8">
+															<h5 class="font-bold">
+																Bed/Ward No :
+																<span>{{object.rooms}}</span>
+															</h5>
+														</div>
+														<div class="col-lg-4">
+															<h5>
+																Date of Admission :
+																<span>{{object.date_of_admission}}</span>
+															</h5>
+														</div>
+													</div>
+													</br>
+													<div class="row">
+														<div class="col-lg-4">
+															<div class="form-group" id="dischargeDate_Id">
+																<label>Date of Admission &nbsp <span
+																		style="color: red">*</span>
+																</label>
+																<div class="input-group date"> <span
+																		class="input-group-addon"></span>
+																	<input type="text" id="invoiceDate"
+																		class="form-control" readonly="true"
+																		value="{{object.date_of_admission}}">
+																	<label id="invoiceDatehelp" class="error"
+																		for=""></label>
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-4">
+															<div class="form-group">
+																<label>Select Time &nbsp <span
+																		style="color: red">*</span>
+																</label>
+																<div class="input-group clockpicker"
+																	data-autoclose="true">
+																	<input id="admissionTime" type="text"
+																		class="form-control dontallowspecailchar"
+																		readonly="true"
+																		placeholder="Enter Admission Time"
+																		value="{{object.time_of_admission}}"> <span
+																		class="input-group-addon"></span>
+																</div>
+																<label id="startTimehelp" class="error" for=""></label>
+															</div>
+														</div>
+														<div class="col-lg-4">
+															<div class="form-group">
+																<label>Weight &nbsp <span style="color: red"></span>
+																</label>
+																<input id="refDoctorName" type="text"
+																	class="form-control" placeholder="Reference By"
+																	value="{{object.weight}}">
+																<label id="refDoctorNamehelp" class="error"
+																	for=""></label>
+															</div>
+														</div>
+													</div>
+													</br>
+													<div class="bg-success p-xs b-r-sm text-uppercase  font-bold">
+														RELATIVE / PARENTS DETAILS</div>
+													<div class="row">
+														<div class="col-lg-4">
+															<div class="form-group">
+																<label>Name of Person for Bill Payment &nbsp <span
+																		style="color: red"></span>
+																</label>
+																<input id="payingPerson" type="text"
+																	class="form-control"
+																	placeholder="Enter Name of Person for Bill Payment"
+																	value="{{object.bill_responsible}}">
+																<label id="payingPersonhelp" class="error"
+																	for=""></label>
+															</div>
+														</div>
+														<div class="col-lg-3">
+															<div class="form-group">
+																<label>Relation With Patient &nbsp <span
+																		style="color: red"></span>
+																</label>
+																<input id="relationwithPatient" type="text"
+																	class="form-control" placeholder="Relation"
+																	value="{{object.bill_relation}}">
+																<label id="relationwithPatienthelp" class="error"
+																	for=""></label>
+															</div>
+														</div>
+														<div class="col-lg-3 hide">
+															<div class="form-group">
+																<label>Contact Number &nbsp <span
+																		style="color: red"></span>
+																</label>
+																<input id="contactNumber" type="text"
+																	value="{{object.patient.phone}}"
+																	class="form-control" maxlength="10"
+																	placeholder="Enter Contact Number">
+																<label id="contactNumberhelp" class="error"
+																	for=""></label>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-4 hide">
+															<div class="form-group">
+																<label>Alternate Number &nbsp <span
+																		style="color: red"></span>
+																</label>
+																<input id="alternateNumber"
+																	value="{{object.alternate_phone}}" type="text"
+																	class="form-control" maxlength="10"
+																	placeholder="Enter Alternate Number ">
+																<label id="alternateNumberhelp" class="error"
+																	for=""></label>
+															</div>
+														</div>
+														<div class="col-lg-6">
+															<div class="form-group">
+																<label>Address of Person &nbsp <span
+																		style="color: red"></span>
+																</label>
+																<input id="addOfPerson"
+																	value="{{object.patient.address}}" type="text"
+																	class="form-control"
+																	vplaceholder="Address of Person">
+																<label id="addOfPersonhelp" class="error"
+																	for=""></label>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-12">
+															<div class="form-group">
+																<label>Provisional Diagnosis &nbsp <span
+																		style="color: red">*</span>
+																</label>
+																<textarea id="provisional" name="provisional_diagnosis"
+																	type="text"
+																	placeholder="Enter Provisional Diagnosis"
+																	class="dontallowspecailchar form-control h-150"
+																	value="{{object.provisional_diagnosis}}">{{object.reason_admission}}</textarea>
+																<label id="provisionalhelp" class="error"
+																	for=""></label>
+															</div>
+														</div>
+													</div>
+													<input type="hidden" value="{{object.ipd_id}}" name="ipd_id">
+													<div class="row">
+														<div class="col-lg-12">
+															<div class="form-group">
+																<label>Reason For Admission &nbsp <span
+																		style="color: red">*</span>
+																</label>
+																<textarea id="history" name="admission_reason"
+																	type="text"
+																	class="dontallowspecailchar form-control h-150"
+																	value="{{object.reason_admission}}">{{object.reason_admission}}</textarea>
+																<label id="historyhelp" class="error" for=""></label>
+															</div>
+														</div>
+													</div>
+													<div class="form-group text-left">
+														<div>
+															<br>
+															<input class="btn btn-success btn-sm" type="submit"
+																value="Update">
+															<button id="cancel" class="btn btn-success btn-sm"
+																type="button">Cancel</button>
+														</div>
+													</div>
+												</div>
+										</div>
+									</div>
+									</form>
+								</div>
+							</div>
+							</section>
+						</div>
+						<!---PROCEDURE AND EXTRA VISITS-->
+						<div id="procedureTab" class="tab-pane fade">
+							<div class="col-lg-14">
+								<div class="card">
+									<div class="card-header">
+										<header class="font-weight-bold  font-italic">Procedure and Extra Visits</header>
+									</div>
+									<!--  CARD BODY   -->
+									<div class="card-body">
+										<div class="card-panel">
+
+
+											<div class="row">
+												<div class="pull-right">
+													<a data-toggle="modal" href="#modal-form-notes" title="Add Notes!">
+														<i class="fa fa-file-text fa-2x"></i>
+													</a>
+												</div>
+												<div id="modal-form-notes" class="modal fade" aria-hidden="true">
+													<div class="modal-dialog  modal-lg">
+														<div class="modal-content">
+															<div class="modal-body">
+																<form method="post"
+																	action="{% url 'discharge_details' ipd_id=object.ipd_id %} "
+																	enctype="multipart/form-data">{% csrf_token %}
+																	<div class="row">
+																		<div class="col-lg-12 b-r">
+																			<h3 class="m-t-none m-b">Add Extra Visits &
+																				Procedures</h3>
+																			<input type="hidden"
+																				value="{{object.ipd_id}}" name="ipd">
+																			<div class="form-group">
+																				{{procedure.report | add_class:'form-control '| attr:'rows:3'}}
+																			</div>
+																			<!--  -->
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-lg-6">
+																			<div class="form-group">
+																				<label>Date</label>
+																				<div class="input-group date">
+																					{{ procedure.date| add_class:'datepicker form-control' }}
+																					<label id="addNotesIDhelp"
+																						class="error" for=""></label>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-lg-6">
+																			<div class="form-group" id="notesTimeId">
+																				<label>Select Time &nbsp <span
+																						style="color: red">*</span>
+																				</label>
+																				<div data-placement="bottom"
+																					data-align="bottom"
+																					data-autoclose="true">
+																					{{ procedure.time| add_class:'clockpicker form-control' }}
+																				</div>
+																				<label id="addNotesTimeIdhelp"
+																					class="error" for=""></label>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div>
+																			<button id="saveNotesNewId"
+																				class="btn btn-sm btn-success pull-right m-t-n-xs"
+																				value="SUBMIT" type="submit">
+																				<strong>Save</strong>
+																			</button>
+																			<button type="button"
+																				class="btn btn-white btn-sm"
+																				data-dismiss="modal">Close</button>
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- 
+											<div id="modal-form-notes-update" class="modal fade"
+												aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-body"><div class="row"><div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Update Extra Visits &
+																		Procedures</h3><input type="hidden" id="updateNotesId"><div class="form-group"><textarea id="updatenotesTextId" type="text"
+																			placeholder="Add Extra Visits & Procedures"
+																			class="form-control" required></textarea></div></div></div><div class="row"><div><button id="updateNotesNewId"
+																		class="btn btn-sm btn-success pull-right m-t-n-xs"
+																		type="submit"><strong>Update</strong></button><button type="button" class="btn btn-white btn-sm"
+																		data-dismiss="modal">Close</button></div></div></div></div></div></div></div></form>
+										     -->
+											</div>
+											<br>{% for pro in prolist %}
+											<div class="media">
+												<div class="shadow w-100 p-3 mb-5 bg-white rounded">
+													<div class="media-body">
+														<h4 class="media-heading" style="color: black; background-color: #7386D5"><i>{{pro.date}}</i></h4>
+														<br>
+														<p style="color: black;">{{pro.report}}</p>
+														<br>
+													</div>
+												</div>
+											</div>{% endfor %}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!------Procedure End-->
+						<!--------Investigation Tab-->
+						<div id="investigationId" class="tab-pane fade">
+
+							<div class="col-lg-14">
+								<div class="card">
+									<div class="card-header">
+										<header class="font-weight-bold  font-italic">Investigation</header>
+									</div>
+									<!--  CARD BODY   -->
+									<div class="card-body">
+										<div class="card-panel">
+
+											<form method="post"
+												action="{% url 'discharge_details' ipd_id=object.ipd_id  %}"
+												enctype="multipart/form-data">{% csrf_token %}</br>
+												<div class="row">
+													<div class="pull-right">
+														<a data-toggle="modal" href="#modal-form-invest-add"> <i
+																class="fa fa-file-photo-o fa-2x"></i>
+														</a>
+													</div>
+												</div>
+												<br>
+												<br>{% for pro in investilist %}
+												<div class="media">
+													<div class="shadow w-100 p-3 mb-5 bg-white rounded">
+														<div class="media-body">
+															<h4 class="media-heading" style="color: black;background-color: #7386D5">{{pro.name}} </h4>
+															
+															<br>
+															<p style="color: black; ">{{pro.report}}</p>
+															
+															<small><i>{{pro.date}}</i></small>
+														</div>
+													</div>
+												</div>{% endfor %}
+												<div id="modal-form-invest-add" class="modal fade" aria-hidden="true">
+													<div class="modal-dialog   modal-lg	">
+														<div class="modal-content">
+															<div class="modal-body">
+																<div class="row">
+																	<div class="col-sm-12 b-r">
+																		<h3 class="m-t-none m-b">Investigation</h3>
+																		<div class="form-group">
+																			{{investi.name | add_class:'form-control'}}
+																			<label>Report Name</label>
+																		</div>
+																		<input type="hidden" value="{{object.ipd_id}}"
+																			name="ipd">
+																		<div class="form-group">
+																			{{investi.report | add_class:'form-control '| attr:'rows:3' }}
+																		</div>
+																		<!--  -->
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-lg-6">
+																		<div class="form-group" id="notesDateId">
+																			<label>Date</label>
+																			<div class="input-group date">
+																				{{ investi.date | add_class:'datepicker  form-control	' }}
+																				<label id="addNotesIDhelp" class="error"
+																					for=""></label>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="row">
+																	<div>
+																		<button id="saveNotesNewId"
+																			class="btn btn-sm btn-success pull-right m-t-n-xs"
+																			value="SUBMIT" type="submit">
+																			<strong>Save</strong>
+																		</button>
+																		<button type="button"
+																			class="btn btn-white btn-sm"
+																			data-dismiss="modal">Close</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="treatmentgivenTab" class="tab-pane fade">
+							<div class="col-lg-14">
+								<div class="card">
+									<div class="card-header">
+										<header class="font-weight-bold  font-italic">Treatment Given</header>
+									</div>
+									<!--  CARD BODY   -->
+									<div class="card-body">
+										<div class="card-panel">
+
+											<form method="post"
+												action="{% url 'discharge_details' ipd_id=object.ipd_id  %}"
+												enctype="multipart/form-data">{% csrf_token %}
+												<div class="row">
+													<div class="col-lg-3">
+														<div class="form-group" id="Medicine_Id">
+															<label>Medicine Name &nbsp<span style="color: red">*</span>
+															</label>{{treatmentgiven.medicine_name | add_class:'form-control'}}
+															<label id="invoiceDatehelp" class="error" for=""></label>
+														</div>
+													</div>
+													<input type="hidden" value="{{object.ipd_id}}" name="ipd">
+													<div class="col-lg-3">
+														<div class="form-group">
+															<label>Type of Doses &nbsp<span style="color: red">*</span>
+															</label>{{treatmentgiven.types_of_doses | add_class:'form-control'}}
+															<label id="startTimehelp" class="error" for=""></label>
+														</div>
+													</div>
+
+													<div class="col-lg-3">
+														<div class="form-group">
+															<label>Route &nbsp  <span style="color: red"></span>
+
+															</label>{{treatmentgiven.route | add_class:'form-control'}}
+															<label id="refDoctorNamehelp" class="error" for=""></label>
+														</div>
+													</div>
+													<div class="col-lg-3">
+														<div class="form-group">
+															<label>Number Of Days &nbsp <span style="color: red"></span>
+															</label>{{treatmentgiven.number_of_days | add_class:'form-control'}}
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div>
+														<button id="saveNotesNewId"
+															class="btn btn-sm btn-success pull-centre m-t-n-xs"
+															value="SUBMIT" type="submit"> <strong>Save</strong>
+														</button>
+														<button type="button" class="btn btn-white btn-sm"
+															data-dismiss="modal">Close</button>
+													</div>
+												</div>
+												</br>
+											</form>
+											<br>
+											<br>
+
+											<div class="media">
+												<div class="table-responsive">
+													<table  id="example" class="table order-column hover">
+														<thead>
+															<tr>
+																<th></th>
+																<th>Medicine Name</th>
+																<th>Doses Type</th>
+																<th>Days</th>
+																<th>Description</th>
+																<th width="150px">Buttons</th>
+															</tr>
+														</thead>
+														<tbody>{% for ab in treatmentgivenlist %}
+															<tr class="gradeX">
+																<td></td>
+																<td>{{ ab.medicine_name}}</td>
+																<td>{{ ab.types_of_doses }}</td>
+																<td>{{ ab.route }}</td>
+																<td>{{ ab.number_of_days}}</td>
+																<td>
+																	<a href="#"><i class="fa fa-trash" aria-hidden="true"></i>
+																</td>
+															</tr>{% endfor %}</tbody>
+													</table>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="treatmentadvicedTab" class="tab-pane fade">
+							<div class="col-lg-14">
+								<div class="card">
+									<div class="card-header">
+										<header class="font-weight-bold  font-italic">Treatment Adviced </header>
+									</div>
+									<!--  CARD BODY   -->
+									<div class="card-body">
+										<div class="card-panel">
+
+											<form method="post"
+												action="{% url 'discharge_details' ipd_id=object.ipd_id  %}"
+												enctype="multipart/form-data">{% csrf_token %}
+												<div class="row">
+													<div class="col-lg-3">
+														<div class="form-group" id="Medicine_Id">
+															<label>Medicine Name &nbsp<span style="color: red">*</span>
+															</label>{{treatmentadviced.medicine | add_class:'form-control'}}
+															<label id="invoiceDatehelp" class="error" for=""></label>
+														</div>
+													</div>
+													<div><input type="hidden" value="{{object.ipd_id}}" name="ipd">
+													</div>
+
+													<div class="col-lg-3">
+														<div class="form-group">
+															<label>Doses &nbsp <span style="color: red">*</span>
+															</label>{{treatmentadviced.types_ofdoses | add_class:'form-control'}}
+															<label id="startTimehelp" class="error" for=""></label>
+														</div>
+													</div>
+
+													<div class="col-lg-3">
+														<div class="form-group">
+															<label>Number Of Days &nbsp <span style="color: red"></span>
+
+															</label>{{treatmentadviced.number_ofdays | add_class:'form-control'}}
+															<label id="refDoctorNamehelp" class="error" for=""></label>
+														</div>
+													</div>
+													<div class="col-lg-3">
+														<div class="form-group">
+															<label>Description &nbsp <span style="color: red"></span>
+															</label>{{treatmentadviced.discription | add_class:'form-control'}}
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div>
+														<button id="saveNotesNewId"
+															class="btn btn-sm btn-success pull-centre m-t-n-xs"
+															value="SUBMIT" type="submit" id="addAdviceTreatmentValuesId"> <strong>Save</strong>
+														</button>
+														<button type="button" class="btn btn-white btn-sm"
+															data-dismiss="modal">Close</button>
+													</div>
+												</div>
+												</br>
+											</form>
+											<br>
+											<br>
+
+											<div class="media">
+												<div class="table-responsive">
+													<table  id="example" class="table order-column hover">
+														<thead>
+															<tr>
+																<th></th>
+																<th>Medicine Name</th>
+																<th>Doses Type</th>
+																<th>Days</th>
+																<th>Description</th>
+																<th width="100px">Buttons</th>
+															</tr>
+														</thead>
+														<tbody>{% for ab in treatmentadvicedlist %}
+															<tr class="gradeX">
+																<td></td>
+																<td>{{ ab.medicine}}</td>
+																<td>{{ ab.types_ofdoses }}</td>
+																<td>{{ ab.number_ofdays }}</td>
+																<td>{{ ab.discription}}</td>
+
+																<td>
+																	<a href="#"><i class="fa fa-trash" aria-hidden="true"></i>
+																</td>
+															</tr>{% endfor %}
+														</tbody>
+													</table>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						
+</div>
+
+						<div id="dailyTab" class="tab-pane fade">
+	
+								<div class="col-lg-14">
+										<div class="card">
+											<div class="card-header">
+												<header class="font-weight-bold  font-italic">Daily Round</header>
+											</div>
+											<!--  CARD BODY   -->
+											<div class="card-body">
+												<div class="card-panel">
+		
+													<form method="post"
+														action="{% url 'discharge_details' ipd_id=object.ipd_id  %}"
+														enctype="multipart/form-data">{% csrf_token %}
+													</br>
+														<div class="row">
+															<div class="pull-left">
+																<a data-toggle="modal" href="#modal-form-treatment-add"> <i class="fa fa-stethoscope fa-2x"></i>
+																</a>
+															</div>
+														</div>
+														<br>
+														<br>
+														
+														<div id="modal-form-treatment-add" class="modal fade" aria-hidden="true">
+															<div class="modal-dialog   modal-lg	">
+																<div class="modal-content">
+																	<div class="modal-body">
+																			<div class="row">
+																					<div class="col-lg-4">
+																						<div class="form-group">
+																							 <input id="dailyRoundvalueId" type="hidden" value="0">
+																							<label>Enter Temp &nbsp<span style="color: red">*</span></label>
+																							{{dailyround.temp  | add_class:'form-control'}} 
+																							<label id="temphelp" class="error" for=""></label>
+																						</div>
+																					</div>
+																					<div class="col-lg-4">
+																							<div class="form-group">
+																							<label>Pulse &nbsp<span style="color: red">*</span></label> 
+																							{{dailyround.pulse  | add_class:'form-control'}} 
+																							<label	id="pulseshelp" class="error" for=""></label>
+																						</div>										
+																					</div>
+																					<div class="col-lg-4">
+																						<div class="form-group">
+																							<label>BP mm of HG</label> 
+																							{{dailyround.bp| add_class:'form-control'}} 
+																							<label id="bphelp" class="error" for="" ></label>
+																						</div>
+																					</div>
+																				</div>
+																			   <div class="row">		
+																						<div class="col-lg-4">
+																							<div class="form-group">
+																								<label>RS &nbsp<span style="color: red"></span></label> 
+																								{{dailyround.rs | add_class:'form-control'}} 
+																								<label id="rshelp" class="error" for=""></label>
+																							</div>
+																						</div>
+																						<div class="col-lg-4">
+																							<div class="form-group">
+																								<label>CVS &nbsp<span style="color: red"></span></label> 
+																								{{dailyround.cvs | add_class:'form-control'}} 
+																								<label id="cVShelp" class="error" for=""></label>
+																							</div>
+																						</div>
+																						<div class="col-lg-4">
+																							<div class="form-group">
+																								<label>PA &nbsp<span style="color: red">*</span></label> 
+																								{{dailyround.pa | add_class:'form-control'}} 
+																								<label id="pahelp" class="error" for=""></label>
+																							</div>
+																						</div>
+																			   </div>
+																			   <div class="row">			
+																						<div class="col-lg-4">
+																							<div class="form-group">
+																								<label>CNS &nbsp<span style="color: red">*</span></label> 
+																								{{dailyround.cns | add_class:'form-control'}} 
+																								<label id="cnshelp" class="error" for="" ></label>
+																							</div>
+																						</div>	
+																						<div class="col-lg-4">
+																							<div class="form-group">
+																								<label>Pupils</label> 
+																								{{dailyround.pupils | add_class:'form-control'}}  
+																								<label id="pupilshelp" class="error" for=""></label>
+																							</div>
+																					   </div><input type="hidden" value="{{object.ipd_id}}" name="ipd">
+																					   <div class="col-lg-4">
+																							<div class="form-group">
+																								<label>Planter &nbsp<span style="color: red"></span></label> 
+																								{{dailyround.planter | add_class:'form-control'}} 
+																								<label id="planterhelp" class="error" for=""></label>
+																						</div>	   
+																					   </div>
+																			  </div>			
+																			  <div class="row">
+																						   <div class="col-lg-4">
+																								  <div class="form-group">
+																									<label>Other &nbsp<span style="color: red"></span></label>
+																									{{dailyround.other | add_class:'form-control'}}  
+																									 <label id="otherhelp" class="error" for=""></label>
+																								</div>		 
+																						   </div>
+																						   <div class="col-lg-4">
+																							 <div class="form-group" id="checkUpdateId">
+																								<label>Date</label>
+																								<div class="input-group date">
+																									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+																									{{dailyround.date | add_class:'datepicker form-control'}} 
+																									  <label id="medicineDateIDhelp" class="error" for=""></label>
+																								</div>
+																							 </div>
+																						</div>
+																						<div class="col-lg-4">
+																							<div class="form-group" id="dailyRoundTimeId">
+																							<label>Select Time &nbsp<span style="color: red">*</span></label>
+																							<div class="input-group clockpicker" data-autoclose="true">
+																									{{dailyround.time | add_class:'form-control'}} 
+																								<span class="input-group-addon"> <span
+																									class="fa fa-clock-o"></span>
+																								</span>
+																							</div>
+																							<label id="dailyRoundTimehelp" class="error" for=""></label>
+																							  </div>	
+																						</div>	
+																			  </div>	
+																				<!-- <div class="row">	
+																				  </div> -->
+																				  <div class="row">
+																					<div class="col-lg-12">
+																						<div class="form-group text-center">
+																							<div>
+																								<button id="saveDailyCheckId" class="btn btn-success btn-sm" value="SUBMIT" type="submit">Save</button>
+																								<button type="button" class="btn btn-white btn-sm"data-dismiss="modal">Close</button>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</form>
+</div>
+													
+											<div class="media">
+													<div class="table-responsive">
+														<table  id="example" class="table order-column hover">
+															<thead>
+																<tr>
+																	<th></th>
+																	<th>Temprature</th>
+																	<th>Pulse</th>
+																	<th>BP</th>
+																	<th>RS</th>
+																	<th>CVS</th>
+																	<th>PA</th>
+																	<th>CNS</th>
+																	<th>Pupil</th>
+																	<th>Planter</th>
+																	<th>Other</th>
+																	<th>Date</th>
+																	<th>Time</th>
+																	<th>Buttons</th>
+																</tr>
+															</thead>
+															<tbody>{% for ab in dailyroundlist %}
+																<tr class="gradeX">
+																	<td></td>
+																	<td>{{ ab.temp}}</td>
+																	<td>{{ ab.pulse }}</td>
+																	<td>{{ ab.bp }}</td>
+																	<td>{{ ab.rs}}</td>
+																	<td>{{ ab.cvs}}</td>
+																	<td>{{ ab.pa}}</td>
+																	<td>{{ ab.cns}}</td>
+																	<td>{{ ab.pupils}}</td>
+																	<td>{{ ab.planter}}</td>
+																	<td>{{ ab.other}}</td>
+																	<td>{{ ab.date}}</td>
+																	<td>{{ ab.time}}</td>
+	
+																	<td>
+																		<a href="#"><i class="fa fa-trash" aria-hidden="true"></i>
+																	</td>
+																</tr>{% endfor %}
+															</tbody>
+														</table>
+													</div>
+												</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+		
+
+
+						<div id="dischargeTab" class="tab-pane fade">
+							<div class="col-lg-14">
+								<div class="card">
+									<div class="card-header">
+										<header class="font-weight-bold  font-italic">Discharge Form</header>
+										<div class="float-left">
+												<a  href="{% url 'discharge_print' ipd_id=object.ipd_id %}"> 
+												<i class="fa fa-print fa-2x" aria-hidden="true"></i></a>
+												</a>
+											</div>
+									</div>
+									<!--  CARD BODY   -->
+									<div class="card-body">
+										<div class="card-panel">
+
+											<form method="post"
+												action="{% url 'discharge_details' ipd_id=object.ipd_id  %}"
+												enctype="multipart/form-data">{% csrf_token %}
+												<div class="row">
+													<div class="col-lg-12">
+														<div class="form-group">
+															<label>Final Diagnosis &nbsp<span
+																	style="color: red">*</span></label>
+															{{discharge.final_diagnosis | add_class:'form-control'}}
+															<label id="diagnosishelp" class="error" for=""></label>
+														</div>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-lg-12">
+														<div class="form-group">
+															<label>Condition at Time of Discharge &nbsp<span
+																	style="color: red">*</span></label>
+															{{discharge.discharge_condition | add_class:'form-control'}}
+															<label id="conditionhelp" class="error" for=""></label>
+														</div>
+													</div>
+												</div>
+
+												<div class="media">
+														<div class="table-responsive">
+																<caption align=bottom>Treatment Given &nbsp</caption>
+															<table  id="example" class="table order-column hover">
+																<thead>
+																	<tr>
+																		<th></th>
+																		<th>Medicine Name</th>
+																		<th>Doses Type</th>
+																		<th>Route</th>
+																		<th>Days</th>
+																		<th width="150px">Buttons</th>
+																	</tr>
+																</thead>
+																<tbody>{% for ab in treatmentgivenlist %}
+																	<tr class="gradeX">
+																		<td></td>
+																		<td>{{ ab.medicine_name}}</td>
+																		<td>{{ ab.types_of_doses }}</td>
+																		<td>{{ ab.route }}</td>
+																		<td>{{ ab.number_of_days}}</td>
+																		<td>
+																			<a href="#"><i class="fa fa-trash" aria-hidden="true"></i>
+																		</td>
+																	</tr>{% endfor %}</tbody>
+															</table>
+														</div>
+													</div>
+												</br>
+											</br>
+										
+											<div class="media">
+												<div class="table-responsive">
+														<caption align=bottom>Treatment Adviced &nbsp</caption>
+														<table  id="example" class="table order-column hover">
+														<thead>
+															<tr>
+																<th></th>
+																<th>Medicine Name</th>
+																<th>Doses Type</th>
+																<th>Days</th>
+																<th>Description</th>
+																<th width="150px">Buttons</th>
+															</tr>
+														</thead>
+														<tbody>{% for ab in treatmentadvicedlist %}
+															<tr class="gradeX">
+																<td></td>
+																<td>{{ ab.medicine}}</td>
+																<td>{{ ab.types_ofdoses }}</td>
+																<td>{{ ab.number_ofdays }}</td>
+																<td>{{ ab.discription}}</td>
+
+																<td>
+																	<a href="#"><i class="fa fa-trash" aria-hidden="true"></i>
+																</td>
+															</tr>{% endfor %}</tbody>
+													</table>
+												</div>
+											</div>
+
+
+												<div class="row">
+													<div class="col-lg-12">
+														<div class="form-group">
+															<label>Follow Up Advised &nbsp<span
+																	style="color: red">*</span></label>
+															{{discharge.follow_up_advice | add_class:'form-control'}}
+															<label id="advicehelp" class="error" for=""></label>
+														</div>
+													</div>
+												</div>
+												<div><input type="hidden" value="{{object.ipd_id}}" name="ipd"></div>
+
+												<div class="row">
+													<div class="col-lg-4">
+														<div class="form-group">
+															<label>Discharge Type &nbsp<span
+																	style="color: red"></span></label>
+															{{discharge.type_discharge | add_class:'form-control'}}
+															<label id="dischargeTypehelp" class="error" for=""></label>
+														</div>
+													</div>
+
+													<div class="col-lg-4">
+														<div class="form-group" id="dischargeDate_Id">
+															<label>DOD &nbsp<span style="color: red">*</span></label>
+															<div class="input-group date">
+																<span class="input-group-addon"><i
+																		class="fa fa-calendar"></i></span>
+																{{discharge.date_of_discharge| add_class:'datepicker form-control'}}
+																<label id="dischargeDateIDhelp" class="error"
+																	for=""></label>
+															</div>
+														</div>
+													</div>
+													<div class="col-lg-4">
+														<div class="form-group">
+															<label>Discharge Time &nbsp<span style="color: red">*</span>
+																(24 Hours
+																Clock)
+															</label>
+															<div class="input-group clockpicker" data-autoclose="true">
+																{{discharge.time_of_discharge | add_class:'clockpicker form-control'}}
+																<span class="input-group-addon"> <span
+																		class="fa fa-clock-o"></span>
+																</span>
+															</div>
+															<label id="dischargeTimehelp" class="error" for=""></label>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div>
+														<button id="saveNotesNewId"
+															class="btn btn-sm btn-success pull-right m-t-n-xs"
+															value="SUBMIT" type="submit"> <strong>Save</strong>
+														</button>
+														<button type="button" class="btn btn-white btn-sm"
+															data-dismiss="modal">Close</button>
+													</div>
+												</div>
+
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+
+
+						{% block javascript %}
+
+						<script>
+							$(document).ready(function() {
+    var t = $('#example').DataTable( {
+        "columnDefs": [ {
+            "searchable": false,
+            "orderable": false,
+            "targets": 0
+        } ],
+        "order": [[ 1, 'asc' ]]
+    } );
+ 
+    t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+} );			</script>
+
+
+
+
+
+						<script>
+						var advanceTreatmentCount = 0 ;
+$('#addAdviceTreatmentValuesId').on('click', addTretmentAdviceDetails);
+var groupTreatmentAdvicedDataArray = new Array();
+var tretmentAdviceDetailsID = 1;
+function addTretmentAdviceDetails(){
+	
+	    var medincineName = $("#advanceMedicineNameId").val().trim();
+	    var doseType = $('#adviceDoseId').val().trim();
+	    var noOfDays = $('#advanceNoOfDaysId').val().trim();
+	    var description = $("#advanceDescriptionId").val().trim();
+	    
+	    if(medincineName === ""){
+	    	alert("Select Medicine");
+	        return;
+	    }
+	    if(doseType === ""){
+	    	alert("Enter Dose");
+	        return;
+	    }
+	    
+	    if(noOfDays === ""){
+	    	alert("Ener Days");
+	        return;
+	    }
+	    if(description === ""){
+	    	alert("Enter Description");
+	        return;
+	    }
+	    if (validateAdvancedTreatment(medincineName)) {
+	    	$("#addMedicineNameId").val("");
+	    	alert("Medicine Already Added");
+	        return;
+	    }
+	    var tuppleData = '';
+	    tuppleData += JSON.stringify({
+	        "noOfDays" : noOfDays,
+			"doseType": doseType,
+			"description": description,
+			"medincineName":medincineName
+	    });
+	    groupTreatmentAdvicedDataArray.push(tuppleData);
+	    var htmlDiv = '<div class="adviceTreatmentDetails"><div class="form-group zebra" id="' + tretmentAdviceDetailsID + '">';
+	    	htmlDiv += '<div class="col-lg-3">' + medincineName + '</div>';
+	    	htmlDiv += '<div class="col-lg-2">' + doseType + '</div>';
+	    	htmlDiv += '<div class="col-lg-2">' + noOfDays + '</div>';
+	    	htmlDiv += '<div class="col-lg-4">' + description + '</div>';
+	    	htmlDiv += '<div class="col-lg-1"><button type="button" class="removerow btn btn-danger btn-sm"><i class="fa fa-minus"></i></button></div></div><div class="clearfix"></div></div></div>';
+    
+	    	$('#medicineAttributeDetailsID').prepend(htmlDiv);
+	    	advanceTreatmentCount++;
+	    	
+	    	tretmentAdviceDetailsID++;
+	    	$("#advanceMedicineNameId").val("");
+	    	$("#adviceDoseId").val("");
+	    	$("#advanceDescriptionId").val("");
+	    	$("#advanceNoOfDaysId").val("");
+	    	removeMedicineDiv();
+	
+}
+
+function validateAdvancedTreatment(medincineName){
+	var data = "";
+    var isDuplicate = false;
+    $.each(groupTreatmentAdvicedDataArray, function (key, value) {
+        data = $.parseJSON(value);
+        if (data.medincineName === medincineName) {
+            isDuplicate = true;
+            return false;
+        }
+    });
+    return isDuplicate;
+}
+
+function removeMedicineDiv(){
+    $(document).off("click", '.removerow');
+    $(document).on('click', '.removerow', function () {
+        try {
+        	removeAdviceTreatmentDataRow($(this).closest('.form-group').prop("id"));
+        } catch (e) {
+            //console.log(e);
+        }
+    });
+    return;
+}
+
+function removeAdviceTreatmentDataRow(tuppleID) {
+    var counter = 1;
+    var criteriaDivs = $(".adviceTreatmentDetails").find("div.zebra");
+    criteriaDivs.each(function (index) {
+        var thisDivID = this.id;
+        if (tuppleID === thisDivID) {
+            $('#' + tuppleID).slideUp().remove();
+            groupTreatmentAdvicedDataArray.splice($.inArray(groupTreatmentAdvicedDataArray[groupTreatmentAdvicedDataArray.length - counter], groupTreatmentAdvicedDataArray), 1);
+        } else {
+            counter++;
+        }
+    });
+    return;
+}
+function saveTreatmentAdvice(){
+	 var medicineDetail = '';
+	 //groupTreatmentAdvicedDataArray
+	 var medicineDetail = '[';
+	 var data = "";
+	 $.each(groupTreatmentAdvicedDataArray, function (key, value) {
+	        data = $.parseJSON(value);
+	        medicineDetail += JSON.stringify({
+	        	"noOfDays" :data.noOfDays,
+	       		"ipdId": ipdId,
+	       		"patientId":patientId ,
+	       		"dose": data.doseType,
+	       		"medicine": data.medincineName,
+	       		"description":data.description
+		    }) +",";	
+	 });
+	 if(medicineDetail != ""){
+		 medicineDetail = medicineDetail.slice(0, -1);
+   }
+	medicineDetail +="]";
+   $.ajax({
+		  url: contextPath + "{% url 'discharge_details' ipd_id=object.ipd_id %}",
+		  data: 'saveData=' + medicineDetail,
+		  method: 'POST'
+	}).then(function(data) {
+		if (data.indexOf("SUCCESS") >= 0) {
+			 location.reload();
+		} else if((data.indexOf("FAILED") >= 0)){
+			alert("Failed to Save Records");
+		}
+	});
+}
+
+function loadTreatmentAdvice(treatmentAdvice){
+	
+	
+	var operationData= "";
+    tcount = 1;
+	operationData+="<div class='panel panel-default'>";
+	operationData+="<div class='panel-heading'>";
+   	operationData+="<h4><a data-toggle='collapse' data-parent='#TreatmentGiventTab' href='#treatmentAdvice_"+tcount+"'> "+ "Treatment Advised"+ "</a></h4>"; 
+	operationData+="</div>";
+	operationData+="<div id='treatmentAdvcide_"+tcount+"' class='panel-collapse>";
+	operationData+="<div class='panel-body'>";
+	operationData+="<table class='table table-striped'>";
+	operationData+="<thead>";
+	operationData+="<tr>";
+		operationData+="<th width='10%'>SR NO</th>";
+		operationData+="<th width='50%'>Medicine Name</th>";
+		operationData+="<th width='10%'>Dose</th>";
+		operationData+="<th width='20%'>Description</th>";
+		operationData+="<th width='20%'>No of Days</th>";
+		operationData+="<th width='10%'>Remove</th>";
+    operationData+="</tr>";
+	operationData+="</thead>";
+	
+	var srCount = 1;
+	if(typeof treatmentAdvice !="undefined"){
+    	if(typeof treatmentAdvice.length != "undefined" && treatmentAdvice.length > 0){
+    		$.each(treatmentAdvice, function (i, item) {
+    			operationData+="<tbody>";
+    			operationData+="<tr>";
+    	      ///  operationData+="<td>"+srCount+"</td>";
+    	        operationData+="<td ><a href='javascript:deleteTreatementAdviced("+item.id+")'>"+srCount+"</a></td>";
+    			operationData+="<td>"+item.medicine+"</td>";
+    			operationData+="<td>"+item.dose+"</td>";
+    			operationData+="<td>"+item.description+"</td>";
+    			operationData+="<td>"+item.noOfDays+" Days</td>";
+    			operationData+="<td ><a href='javascript:deleteTreatementAdviced("+item.id+")'><i class='fa fa-trash fa-2x'></i></a></td>";
+    	        operationData+="</tr>";
+    		    operationData+="</tbody>";
+    		    srCount++;
+    		});
+    	}else{
+    		operationData+="<tbody>";
+			operationData+="<tr>";
+	        operationData+="<td ><a href='javascript:deleteTreatementAdviced("+treatmentAdvice.id+")'>"+srCount+"</a></td>";
+			operationData+="<td>"+treatmentAdvice.medicine+"</td>";
+			operationData+="<td>"+treatmentAdvice.dose+"</td>";
+			operationData+="<td>"+treatmentAdvice.description+"</td>";
+			operationData+="<td>"+treatmentAdvice.noOfDays+" Days</td>";
+			operationData+="<td ><a href='javascript:deleteTreatementAdviced("+treatmentAdvice.id+")'><i class='fa fa-trash fa-2x'></i></a></td>";
+	        operationData+="</tr>";
+		    operationData+="</tbody>";
+    	}
+    }else{
+    	operationData+="<tbody>";
+		operationData+="<tr>";
+        operationData+="<td colspan='5' class='text-danger'>Treatment Advised Missing! Please Add Treatment Advised Before Discharge!</td>";
+        operationData+="</tr>";
+	    operationData+="</tbody>";
+    }
+	
+	operationData+="</table>";	
+    operationData+="</div>";
+    operationData+="</div>";
+	operationData+="</div>";
+	
+	$("#treatMentAdvicetableId").prepend(operationData); 
+	
+}
+//saveMedicineTreatMentID
+$('#saveMedicineTreatMentID').on("click",function() {
+	var erroCnt = 0;
+	if (erroCnt == 0) {
+		swal({
+			title : "<h3 id='mySwalMsg'></h3>",
+			text : "",
+			html : true,
+			type : "info",
+			animation : "none",
+			closeOnConfirm : true,
+			timer : 1,
+			showLoaderOnConfirm : true,
+		},	function() {
+			$(".confirm").hide();
+			$("#mySwalMsg").html("Saving details, please wait ...");
+			setTimeout( function() {saveMedicineTreatMent();}, 1000);
+		});
+	}else{
+	}
+});
+
+							$('.clockpicker').clockpicker({
+								autoclose: true,
+								'default': 'now'
+							});
+
+							$('.datepicker').pickadate({
+								format: 'yyyy-mm-dd',
+								formatSubmit: 'yyyy-mm-dd',
+								hiddenPrefix: 'prefix__',
+								hiddenSuffix: '__suffix',
+
+
+							});
+
+						
+
+							
+
+
+							$('.nav-tabs a').click(function () {
+								$(".tab-content").animate({
+									scrollTop: 0
+								}, 600);
+							});
+
+
+						</script>
+
+
+						<script
+							src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'>
+						</script>
+						<script src='https://code.jquery.com/jquery-1.12.0.min.js'></script>
+						<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js'></script>
+						<script
+							src='https://www.jqueryscript.net/demo/jQuery-Plugin-To-Create-Responsive-Scrolling-Bootstrap-Tabs/jquery.scrolling-tabs.js'>
+						</script>
+						<script>
+							//# sourceURL=pen.js
+						</script>
+						{% endblock javascript %}
+					{% endblock %}

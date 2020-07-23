@@ -1,0 +1,92 @@
+{% extends 'layout.html' %} {% load widget_tweaks %} {% block title %} OPD {% endblock %} {% block body %}
+<section>
+	<div class="card-panel">	<span class="blue-text text-darken-2">Name : {{object.firstname}}</span> 
+		<br>	<span class="blue-text text-darken-2">Phone : {{ object.phone  }}</span>
+		<br>	<span class="blue-text text-darken-2">Address : {{ object.address  }}</span>
+		<br>	<span class="blue-text text-darken-2">Gender : {{ object.gender  }}</span>
+		<br>
+	</div>
+	<!-- BEGIN  - FORM -->
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-header">
+				<header>Admit Patient</header>
+			</div>
+			<!--  CARD BODY   -->
+			<div class="card-body">
+				<!--  CARD PANNEL   -->
+				<div class="card-panel">
+
+				<form class="col s12" role="form" method="post" enctype="multipart/form-data">{% csrf_token %}
+																	<div class="row">
+																		<div class="col-lg-12 b-r">
+																			<h3 class="m-t-none m-b">Create Opd </h3>
+																			<input id="patient_id" name="patient" type="hidden" value="{{object.patient_id}}">
+																			
+																			<!--  -->
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-lg-6">
+																			<div class="form-group">
+																				<label>Date</label>
+																				<div class="input-group date">
+																					{{ form.date| add_class:'datepicker form-control' }}
+																					<label id="addNotesIDhelp"
+																						class="error" for=""></label>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-lg-6">
+																			<div class="form-group" id="notesTimeId">
+																				<label>Select Time &nbsp <span
+																						style="color: red">*</span>
+																				</label>
+																				<div data-placement="bottom"
+																					data-align="bottom"
+																					data-autoclose="true">
+																					{{ form.time| add_class:'clockpicker form-control' }}
+																				</div>
+																				<label id="addNotesTimeIdhelp"
+																					class="error" for=""></label>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div>
+																			<button id="saveNotesNewId"
+																				class="btn btn-sm btn-success pull-right m-t-n-xs"
+																				value="SUBMIT" type="submit">
+																				<strong>Save</strong>
+																			</button>
+																			<button type="button"
+																				class="btn btn-white btn-sm"
+																				data-dismiss="modal">Close</button>
+																		</div>
+																	</div>
+																</form>
+			</div>
+		</div>
+	</div>
+</div>
+ {% block javascript %}
+                <script >
+                    
+
+                            $('.clockpicker').clockpicker({
+                                autoclose: true,
+                                'default': 'now'
+                            });
+
+                            $('.datepicker').pickadate({
+                                format: 'yyyy-mm-dd',
+                                formatSubmit: 'yyyy-mm-dd',
+                                hiddenPrefix: 'prefix__',
+                                hiddenSuffix: '__suffix',
+
+
+                            });
+                </script>
+                {% endblock %}
+</section>
+{% endblock %}
