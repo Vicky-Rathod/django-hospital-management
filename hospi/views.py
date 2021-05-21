@@ -20,11 +20,10 @@ def index(request):
 def new(request):
     if request.POST:
         form = PatientForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/', messages.success(request, 'Patient is successfully created.', 'alert-success'))
-        else:
+        if not form.is_valid():
             return HttpResponse(form.errors)
+        form.save()
+        return redirect('/', messages.success(request, 'Patient is successfully created.', 'alert-success'))
     else:
         form = PatientForm()
         return render(request, 'new.html', {'form': form})
@@ -37,12 +36,11 @@ def ipd(request, patient_id):
     if request.method == "POST":
         formtwo = IpdForm(request.POST)
 
-        if formtwo.is_valid():
-            formtwo.save()
-
-            return HttpResponseRedirect(reverse('ipdlist'))
-        else:
+        if not formtwo.is_valid():
             return HttpResponse(formtwo.errors.as_data())
+        formtwo.save()
+
+        return HttpResponseRedirect(reverse('ipdlist'))
     else:
         active_ipds = Ipd.objects.filter(discharge__isnull=True)
         occupied_rooms = active_ipds.values_list('rooms', flat=True).distinct()
@@ -64,13 +62,12 @@ def createappointment(request,patient_id):
     object =  get_object_or_404(Patient, pk=patient_id)
     if request.POST:
         form = OpdForm(request.POST)
-        if form.is_valid():
-            inves = form.save(commit=False)
-            inves.object = object
-            inves.save()
-            return HttpResponseRedirect(reverse('opdlist'))
-        else:
+        if not form.is_valid():
             return HttpResponse(form.errors)
+        inves = form.save(commit=False)
+        inves.object = object
+        inves.save()
+        return HttpResponseRedirect(reverse('opdlist'))
     else:
         form = OpdForm()
         return render(request, 'appointment.html', {'form': form,'object': object,})
