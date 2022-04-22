@@ -1,5 +1,5 @@
 bootstrap4==0.1.0
-Django==2.2.3
+Django==2.2.28
 django-crispy-forms==1.9.2
 django-widget-tweaks==1.4.8
 pytz==2020.1
